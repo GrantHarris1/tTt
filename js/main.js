@@ -26,21 +26,21 @@ class Model {
     constructor() {
         this.controller = null;
         this.ticTacToeBoard = []
+        this.clicks = 0
 
     }
     setController(Controller) {
         this.controller = Controller;
     }
     setState(s) {
-        
-
 
     }
     onsetState() {
 
     }
     init() {
-
+        this.clicked = 0
+        this.ticTacToeBoard = []
         // this.View. add button and event listener use .bind
     }
 };
@@ -56,6 +56,7 @@ class View {
     }
     render() {
         let app = document.getElementById("app");
+        app.innerText = '' // deleting everything in the app to start fresh -> this can be done in the init method
 
         this.generateHTML({ type: 'div', classes: "h1 text-center text-secondary", parent: app, text: 'oTICx oTACx oTOEx' });
 
@@ -82,7 +83,7 @@ class View {
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '8', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 8) });
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '9', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 9) });
 
-        let turn = this.generateHTML({ type: 'div', classes: 'h3', parent: app, text: 'x' })
+        // let turn = this.generateHTML({ type: 'div', classes: 'h3', parent: app, text: 'x' })
 
         for (let index = 0; index < 9; index++) {
             let element = this.generateHTML({
@@ -99,7 +100,7 @@ class View {
             type: 'button',
             classes: 'col-4 btn-outline-info rounded-pill', parent: container, text: 'Restart'
         })
-        this.restartButton.addEventListener('click', init)
+        this.restartButton.addEventListener('click', this.model.controller.restart.bind(this.model.controller))
 
 
         //    let restartButton = document.createElement("button");
@@ -151,16 +152,16 @@ class Controller {
     }
     checkTurn() {
         if (this.checkTurn % 2 == 0) {
-            turn = playerX
+            // turn = playerX
         }
         else {
-            turn = playerO
+            // turn = playerO
         }
 
     }
 
     updateView() {
-        this.View.render();
+        this.view.render();
     };
 
 
@@ -168,16 +169,31 @@ class Controller {
 
     handleClick(index) {
         console.log("clicked on:", index);
+        console.log("current clicks:", this.model.clicks);
         console.log("specific tile on board in model", this.model.ticTacToeBoard[index]);
 
-        this.model.ticTacToeBoard[index].innerText = 'clicked'
 
 
-        if (winConditions == !true) {
-            new turn
+        if( this.model.clicks % 2 == 0){
+
+            this.model.ticTacToeBoard[index].innerText = 'x'
+        }
+        else{
+            this.model.ticTacToeBoard[index].innerText = 'o'
+
+        }
+
+
+        if (winConditions !== true) {
+            // new turn
         }
         // this.clickFunction.addEventListener('click', this.innerText.class ='div', text: x ,bind(this));
-
+        this.model.clicks++
+    }
+    restart() {
+        this.model.init();
+        this.init();
+        this.view.render();
     }
 }
 
@@ -195,8 +211,8 @@ class Game {
         this.model.setController(this.controller);
         console.log("starting the app");
         this.model.init();
-        this.view.render();
         this.controller.init();
+        this.view.render();
 
     }
 }
