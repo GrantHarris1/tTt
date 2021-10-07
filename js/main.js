@@ -1,5 +1,6 @@
 const x_turn = 'x'
 const o_turn = 'o'
+var a;
 
 
 const winConditions = [
@@ -24,12 +25,15 @@ const winConditions = [
 class Model {
     constructor() {
         this.controller = null;
+        this.ticTacToeBoard = []
 
     }
-    setController(c) {
-        this.controller = c;
+    setController(Controller) {
+        this.controller = Controller;
     }
     setState(s) {
+        
+
 
     }
     onsetState() {
@@ -37,13 +41,14 @@ class Model {
     }
     init() {
 
+        // this.View. add button and event listener use .bind
     }
 };
 
 class View {
     constructor() {
         this.model = null
-
+        this.restartButton = null;
 
     }
     setModel(model) {
@@ -56,11 +61,11 @@ class View {
 
         let container = this.generateHTML({ type: 'div', classes: 'container text-center', parent: app })
 
-        let row = this.generateHTML({ type: 'div', classes: 'row md-4', parent: container, text:  '' })
+        let row = this.generateHTML({ type: 'div', classes: 'row md-4', parent: container, text: '' })
 
         let circleTurn
 
-        
+
 
         // let col = this.generateHTML({ type: 'div', classes: 'col-4', parent: row })
 
@@ -76,18 +81,30 @@ class View {
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '7', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 7) });
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '8', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 8) });
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '9', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 9) });
-        
-        let turn = this.generateHTML({type: 'div', classes:'h3', parent:app, text:'X' })
-        
-        for(let index = 1; index < 10; index++){
-            let element = this.generateHTML({type: 'div', classes: 'col-4 border border-secondary  rounded-pill bg-dark text-light ' , parent: row, text:'x', clickFunction:this.model.controller.handleClick.bind(this.model.controller, index )})
-        }
-                let restartButton= this.generateHTML({ type: 'button', classes: 'col-4 btn-outline-info rounded-pill', parent: container, text: 'Restart' })
 
-                
-    //    let restartButton = document.createElement("button");
-            // restartButton.innerHTML = "Restart";
-            // document.body.appendChild(restartButton);
+        let turn = this.generateHTML({ type: 'div', classes: 'h3', parent: app, text: 'x' })
+
+        for (let index = 0; index < 9; index++) {
+            let element = this.generateHTML({
+                type: 'div',
+                classes: 'col-4 border border-secondary  rounded-pill bg-dark text-light fs-1 p-5 ',
+                parent: row,
+                text: '',
+                clickFunction: this.model.controller.handleClick.bind(this.model.controller, index)
+            })
+
+            this.model.ticTacToeBoard.push(element)
+        }
+        this.restartButton = this.generateHTML({
+            type: 'button',
+            classes: 'col-4 btn-outline-info rounded-pill', parent: container, text: 'Restart'
+        })
+        this.restartButton.addEventListener('click', init)
+
+
+        //    let restartButton = document.createElement("button");
+        // restartButton.innerHTML = "Restart";
+        // document.body.appendChild(restartButton);
     }
     generateHTML(obj) {
         let element = document.createElement(obj.type);
@@ -103,13 +120,14 @@ class View {
         if (obj.parent) {
             obj.parent.append(element)
         }
-        if(obj.index){
+        if (obj.index) {
             element.index = index
         }
 
         // if there is a click function, add onclick
         if (obj.clickFunction) {
             element.addEventListener('click', obj.clickFunction)
+
         }
 
 
@@ -124,9 +142,11 @@ class Controller {
     constructor(model, view) {
         this.view = view;
         this.model = model;
+
     }
 
     init() {
+        // this.view.restartButton.addEventListener('click', this.init.bind(this));
 
     }
     checkTurn() {
@@ -136,17 +156,28 @@ class Controller {
         else {
             turn = playerO
         }
+
     }
-  
-    
-    
-    
-    handleClick(num) {
-        if(winConditions == !true){
+
+    updateView() {
+        this.View.render();
+    };
+
+
+
+
+    handleClick(index) {
+        console.log("clicked on:", index);
+        console.log("specific tile on board in model", this.model.ticTacToeBoard[index]);
+
+        this.model.ticTacToeBoard[index].innerText = 'clicked'
+
+
+        if (winConditions == !true) {
             new turn
         }
-    
-        console.log("clicked on:", num);
+        // this.clickFunction.addEventListener('click', this.innerText.class ='div', text: x ,bind(this));
+
     }
 }
 
@@ -155,6 +186,7 @@ class Game {
     constructor() {
         this.model = new Model();
         this.view = new View();
+
         this.controller = new Controller(this.model, this.view);
     }
 
@@ -177,7 +209,7 @@ function init() {
     a.init()
     circleTurn = false
     console.log(a);
-    restartButton.addEventListener('click', init)
+    let state = 0;
 }
 
 
