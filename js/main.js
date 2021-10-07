@@ -93,7 +93,7 @@ class View {
                 text: '',
                 clickFunction: this.model.controller.handleClick.bind(this.model.controller, index)
             })
-
+            // make a new smart object that store the elemnet along with data
             this.model.ticTacToeBoard.push(element)
         }
         this.restartButton = this.generateHTML({
