@@ -1,3 +1,6 @@
+const x_turn = 'x'
+const o_turn = 'o'
+
 
 const winConditions = [
     [1, 2, 3],
@@ -49,11 +52,15 @@ class View {
     render() {
         let app = document.getElementById("app");
 
-        this.generateHTML({ type: 'div', classes: "h1", parent: app, text: 'TIC TAC TOE' });
+        this.generateHTML({ type: 'div', classes: "h1 text-center text-secondary", parent: app, text: 'oTICx oTACx oTOEx' });
 
-        let container = this.generateHTML({ type: 'div', classes: 'container', parent: app })
+        let container = this.generateHTML({ type: 'div', classes: 'container text-center', parent: app })
 
-        let row = this.generateHTML({ type: 'div', classes: 'row', parent: container, text: '' })
+        let row = this.generateHTML({ type: 'div', classes: 'row md-4', parent: container, text:  '' })
+
+        let circleTurn
+
+        
 
         // let col = this.generateHTML({ type: 'div', classes: 'col-4', parent: row })
 
@@ -69,9 +76,18 @@ class View {
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '7', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 7) });
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '8', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 8) });
         // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '9', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 9) });
+        
+        let turn = this.generateHTML({type: 'div', classes:'h3', parent:app, text:'X' })
+        
         for(let index = 1; index < 10; index++){
-            let element = this.generateHTML({type: 'div', classes: 'col-4 border border-danger', parent: row, text:'x', clickFunction:this.model.controller.handleClick.bind(this.model.controller, index )})
+            let element = this.generateHTML({type: 'div', classes: 'col-4 border border-secondary  rounded-pill bg-dark text-light ' , parent: row, text:'x', clickFunction:this.model.controller.handleClick.bind(this.model.controller, index )})
         }
+                let restartButton= this.generateHTML({ type: 'button', classes: 'col-4 btn-outline-info rounded-pill', parent: container, text: 'Restart' })
+
+                
+    //    let restartButton = document.createElement("button");
+            // restartButton.innerHTML = "Restart";
+            // document.body.appendChild(restartButton);
     }
     generateHTML(obj) {
         let element = document.createElement(obj.type);
@@ -121,7 +137,15 @@ class Controller {
             turn = playerO
         }
     }
+  
+    
+    
+    
     handleClick(num) {
+        if(winConditions == !true){
+            new turn
+        }
+    
         console.log("clicked on:", num);
     }
 }
@@ -151,6 +175,9 @@ class Game {
 function init() {
     let a = new Game();
     a.init()
+    circleTurn = false
     console.log(a);
+    restartButton.addEventListener('click', init)
 }
+
 
