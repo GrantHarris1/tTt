@@ -3,16 +3,7 @@ const o_turn = 'o'
 var a;
 
 
-const winConditions = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 5, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [3, 5, 7]
-]
+
 
 
 
@@ -27,6 +18,16 @@ class Model {
         this.controller = null;
         this.ticTacToeBoard = []
         this.clicks = 0
+        const winConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+    [2, 5, 8],
+    [1, 4, 7],
+    [0, 3, 6]
+]
 
     }
     setController(Controller) {
@@ -174,13 +175,14 @@ class Controller {
 
 
     handleClick(index) {
+        this.model.clicks++
         console.log("clicked on:", index);
         console.log("current clicks:", this.model.clicks);
         console.log("specific tile on board in model", this.model.ticTacToeBoard[index]);
 
 
 
-        if (this.model.clicks % 2 == 0 || this.model.clicks == 8) {
+        if (this.model.clicks % 2 == 0) {
 
             this.model.ticTacToeBoard[index].innerText = 'x',
                 alert("Now its Os Turn");
@@ -192,17 +194,22 @@ class Controller {
             alert('Now its X Turn')
 
         }
-        if (this.model.clicks == 8){
+        if (this.model.clicks == 9){
             alert("Game over")
         }
 
 
 
-        if (winConditions !== true) {
-            // new turn
+        if (this.model.clicks >= 5) {
+            positiionToCheck = winConditions[i];
+            currentValue = '';
+            if(positiionToCheck[j] = 'xxx' || 'ooo' ){
+                this.model.ticTacToeBoard[0];
+            }
+            
         }
         // this.clickFunction.addEventListener('click', this.innerText.class ='div', text: x ,bind(this));
-        this.model.clicks++
+        
     }
     restart() {
         this.model.init();
