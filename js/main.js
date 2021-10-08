@@ -65,6 +65,9 @@ class View {
         let row = this.generateHTML({ type: 'div', classes: 'row md-4', parent: container, text: '' })
 
         let circleTurn
+        
+
+
 
 
 
@@ -88,7 +91,7 @@ class View {
         for (let index = 0; index < 9; index++) {
             let element = this.generateHTML({
                 type: 'div',
-                classes: 'col-4 border border-secondary  rounded-pill bg-dark text-light fs-1 p-5 ',
+                classes: 'col-4 border border-secondary  rounded-pill bg-dark text-light fs-1 p-5 bg-gradient ',
                 parent: row,
                 text: '',
                 clickFunction: this.model.controller.handleClick.bind(this.model.controller, index)
@@ -150,15 +153,18 @@ class Controller {
         // this.view.restartButton.addEventListener('click', this.init.bind(this));
 
     }
-    checkTurn() {
-        if (this.checkTurn % 2 == 0) {
-            // turn = playerX
-        }
-        else {
-            // turn = playerO
-        }
+    // checkTurn() {
+    //     if ( this.model.clicks % 2 == 0) {
+    //         this.generateHTML({ type: 'div', classes: "h2 text-center text-secondary", parent: app, text: 'Now Its Os go!' });
 
-    }
+    //     }
+    //     else {
+    //         // turn = playerO
+    //     }
+
+    // }
+
+
 
     updateView() {
         this.view.render();
@@ -174,14 +180,22 @@ class Controller {
 
 
 
-        if( this.model.clicks % 2 == 0){
+        if (this.model.clicks % 2 == 0 || this.model.clicks == 8) {
 
-            this.model.ticTacToeBoard[index].innerText = 'x'
-        }
-        else{
-            this.model.ticTacToeBoard[index].innerText = 'o'
+            this.model.ticTacToeBoard[index].innerText = 'x',
+                alert("Now its Os Turn");
 
         }
+        else {
+            
+            this.model.ticTacToeBoard[index].innerText = 'o',
+            alert('Now its X Turn')
+
+        }
+        if (this.model.clicks == 8){
+            alert("Game over")
+        }
+
 
 
         if (winConditions !== true) {
