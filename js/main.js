@@ -1,5 +1,4 @@
-const x_turn = 'x'
-const o_turn = 'o'
+
 var a;
 
 
@@ -19,15 +18,15 @@ class Model {
         this.ticTacToeBoard = []
         this.clicks = 0
         const winConditions = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-    [2, 5, 8],
-    [1, 4, 7],
-    [0, 3, 6]
-]
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+            [2, 5, 8],
+            [1, 4, 7],
+            [0, 3, 6]
+        ]
 
     }
     setController(Controller) {
@@ -66,28 +65,12 @@ class View {
         let row = this.generateHTML({ type: 'div', classes: 'row md-4', parent: container, text: '' })
 
         let circleTurn
-        
 
 
 
 
 
-        // let col = this.generateHTML({ type: 'div', classes: 'col-4', parent: row })
 
-        // let h1 = this.generateHTML({ type: 'div', classes: 'h1', parent: col, text: '' })
-
-
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '1', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 1) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '2', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 2) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '3', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 3) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '4', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 4) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '5', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 5) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '6', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 6) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '7', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 7) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '8', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 8) });
-        // this.generateHTML({ type: 'div', classes: 'col-4 border border-danger', parent: row, text: '9', clickFunction: this.model.controller.handleClick.bind(this.model.controller, 9) });
-
-        // let turn = this.generateHTML({ type: 'div', classes: 'h3', parent: app, text: 'x' })
 
         for (let index = 0; index < 9; index++) {
             let element = this.generateHTML({
@@ -107,9 +90,7 @@ class View {
         this.restartButton.addEventListener('click', this.model.controller.restart.bind(this.model.controller))
 
 
-        //    let restartButton = document.createElement("button");
-        // restartButton.innerHTML = "Restart";
-        // document.body.appendChild(restartButton);
+
     }
     generateHTML(obj) {
         let element = document.createElement(obj.type);
@@ -154,16 +135,7 @@ class Controller {
         // this.view.restartButton.addEventListener('click', this.init.bind(this));
 
     }
-    // checkTurn() {
-    //     if ( this.model.clicks % 2 == 0) {
-    //         this.generateHTML({ type: 'div', classes: "h2 text-center text-secondary", parent: app, text: 'Now Its Os go!' });
 
-    //     }
-    //     else {
-    //         // turn = playerO
-    //     }
-
-    // }
 
 
 
@@ -182,34 +154,105 @@ class Controller {
 
 
 
-        if (this.model.clicks % 2 == 0) {
+        if (this.model.clicks % 2 == 1) {
 
-            this.model.ticTacToeBoard[index].innerText = 'x',
+            this.model.ticTacToeBoard[index].innerText = '🧛',
                 alert("Now its Os Turn");
+               
 
         }
         else {
-            
-            this.model.ticTacToeBoard[index].innerText = 'o',
-            alert('Now its X Turn')
+
+            this.model.ticTacToeBoard[index].innerText = '🧟‍♀️',
+                alert('Now its X Turn')
 
         }
-        if (this.model.clicks == 9){
+        if (this.model.clicks == 9) {
             alert("Game over")
         }
 
+//         // solve win conditions without a win condition array
+// ​
+// //  no move:  0
+// //  x moved:  1
+// //  o moved: -1
+// ​
+// let singleArrayExample1 = [ // x wins
+//     0, 0, 1,
+//     0, -1, 1,
+//     -1, 0, 1,
+// ]
+// let singleArrayExample2 = [ // o wins
+//     -1, 0, 1,
+//     0, -1, 1,
+//     1, 0, -1,
+// ]
+// let singleArrayExample3 = [ // tie
+//     -1, 1, -1,
+//     -1, -1, 1,
+//     1, -1, 1,
+// ]
+// ​
+// function method1(singleArray /* single array of 9 items */) {
+// ​
+//     // solve diagonals first (less computation power)
+//     let diag1Sum = singleArray[0] + singleArray[4] + singleArray[8]
+//     let diag2Sum = singleArray[2] + singleArray[4] + singleArray[6]
+//     // console.log({ diag1Sum, diag2Sum })
+// ​
+//     // return as soon as a winner is found, otherwise continue
+//     if (diag1Sum == 3 || diag2Sum == 3) {
+//         return `x is the winner`
+//     }
+//     if (diag1Sum == -3 || diag2Sum == -3) {
+//         return `o is the winner`
+//     }
+// ​
+//     let checkTie = 0;
+// ​
+//     // solve row and columns with double for loop
+//     for (let i = 0; i < 3; i++) {
+//         let rowSum = 0
+//         let colSum = 0
+//         for (let j = 0; j < 3; j++) {
+//             let rowIndex = i * 3 + j
+//             let colIndex = j * 3 + i
+//             console.log({ rowIndex, colIndex })
+// ​
+//             if (singleArray[rowIndex] != 0) {
+//                 checkTie++
+//             }
+// ​
+//             rowSum += singleArray[rowIndex]
+//             colSum += singleArray[colIndex]
+//         }
+//         if (rowSum == 3 || colSum == 3) {
+//             return `x is the winner`
+//         }
+//         if (rowSum == -3 || colSum == -3) {
+//             return `o is the winner`
+//         }
+//         console.log({ rowSum, colSum })
+//     }
+//     if (checkTie > 8) {
+//         return 'tie'
+//     } else {
+//         return 'no one won, keep playing'
+//     }
+// }
 
+        // if (this.model.clicks >= 5) {
+        //     positiionToCheck = winConditions[j];
+        //     currentValue = '';
+        //     if (positiionToCheck[j] = 'xxx' || 'ooo') {
+        //         this.model.ticTacToeBoard[0];
+        //     }
 
-        if (this.model.clicks >= 5) {
-            positiionToCheck = winConditions[i];
-            currentValue = '';
-            if(positiionToCheck[j] = 'xxx' || 'ooo' ){
-                this.model.ticTacToeBoard[0];
-            }
-            
-        }
+        // }
         // this.clickFunction.addEventListener('click', this.innerText.class ='div', text: x ,bind(this));
+
         
+
     }
     restart() {
         this.model.init();
